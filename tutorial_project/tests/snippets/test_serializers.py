@@ -1,5 +1,6 @@
 from collections import OrderedDict
 
+from django.contrib.auth.models import User
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 
@@ -11,7 +12,8 @@ from snippets.serializers import SnippetSerializer
 
 @mark.django_db(transaction=True)
 def test_snippet_serializer_should_have_attributes():
-    snippet = Snippet.objects.create(code='print("hello, world")\n')
+    user = User.objects.create(username="test")
+    snippet = Snippet.objects.create(code='print("hello, world")\n', owner=user)
 
     # I want to not have to use the shell and manually check things when I
     # explore the Serializers API so here's a long test!

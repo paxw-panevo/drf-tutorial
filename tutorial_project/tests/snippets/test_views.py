@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.test import APITestCase
 
@@ -14,8 +15,9 @@ from snippets.models import Snippet
 class TestSnippetViews(APITestCase):
     @classmethod
     def setup_class(cls):
-        Snippet.objects.create(code='foo = "bar"\n')
-        Snippet.objects.create(code='foo = "bar"\n')
+        user = User.objects.create(username="test")
+        Snippet.objects.create(code='foo = "bar"\n', owner=user)
+        Snippet.objects.create(code='foo = "bar"\n', owner=user)
 
     def test_get_index(self):
         response = self.client.get("/snippets/")
