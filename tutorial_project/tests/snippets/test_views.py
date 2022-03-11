@@ -2,8 +2,6 @@ from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from pytest import fixture, mark
-
 from snippets.models import Snippet
 
 # TODO: Let's not mix pytest and unittest
@@ -11,7 +9,6 @@ from snippets.models import Snippet
 # missing-1-required-positional-argument-while-using-pytest-fixture
 
 
-@mark.django_db
 class TestSnippetViews(APITestCase):
     @classmethod
     def setup_class(cls):
