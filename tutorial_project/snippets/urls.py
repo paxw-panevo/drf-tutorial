@@ -16,5 +16,5 @@ format_suffix_urls = format_suffix_patterns(
     ]
 )
 urlpatterns = [
-    path("", include(router.urls)),
+    path("bapi/", include(router.urls)),
 ] + format_suffix_urls
