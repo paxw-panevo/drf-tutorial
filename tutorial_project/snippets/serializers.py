@@ -13,6 +13,12 @@ class SnippetSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    # # This is not necessary as seen in the test but the DRF tutorial includes it?
+    # # See test test_snippet_data_in_user_serializer_should_list_primary_keys
+    # snippets = serializers.PrimaryKeyRelatedField(
+    #     many=True, queryset=Snippet.objects.all()
+    # )
+
     class Meta:
         model = User
         fields = ["id", "username", "snippets"]
