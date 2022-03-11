@@ -6,10 +6,27 @@ from snippets.models import Snippet, LANGUAGE_CHOICES, STYLE_CHOICES
 
 class SnippetSerializer(serializers.HyperlinkedModelSerializer):
     owner = serializers.ReadOnlyField(source="owner.username")
+    # What is the `format=html` for?
+    # Because we've included format suffixed URLs such as '.json', we also need to
+    # indicate on the highlight field that any format suffixed hyperlinks it returns
+    # should use the '.html' suffix.
+    highlight = serializers.HyperlinkedIdentityField(
+        view_name="snippet-highlight", format="html"
+    )
 
     class Meta:
         model = Snippet
-        fields = ["id", "title", "code", "linenos", "language", "style", "owner"]
+        fields = [
+            "url",
+            "id",
+            "highlight",
+            "title",
+            "code",
+            "linenos",
+            "language",
+            "style",
+            "owner",
+        ]
 
 
 class UserSerializer(serializers.ModelSerializer):
