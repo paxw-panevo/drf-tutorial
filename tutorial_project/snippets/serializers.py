@@ -29,11 +29,17 @@ class SnippetSerializer(serializers.HyperlinkedModelSerializer):
         ]
 
 
-class UserSerializer(serializers.ModelSerializer):
-    # # This is not necessary as seen in the test but the DRF tutorial includes it?
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    # # This is not necessary when using ModelSerializer
+    # # as seen in the test but the DRF tutorial includes it?
     # # See test test_snippet_data_in_user_serializer_should_list_primary_keys
     # snippets = serializers.PrimaryKeyRelatedField(
     #     many=True, queryset=Snippet.objects.all()
+    # )
+    # # This is doesn't seem to be necessary when using HyperlinkedModelSerializer
+    # # as seen in the test but the DRF tutorial includes it?
+    # snippets = serializers.HyperlinkedRelatedField(
+    #     many=True, view_name="snippet-detail", read_only=True
     # )
 
     class Meta:
