@@ -7,11 +7,16 @@ from pytest import mark, fixture
 from snippets.models import Snippet
 
 
-@fixture(autouse=True)
-def create_data():
+@fixture()
+def given_user():
     user, _ = User.objects.get_or_create(username="test")
-    Snippet.objects.create(code='foo = "bar"\n', owner=user)
-    Snippet.objects.create(code='foo = "bar"\n', owner=user)
+    return user
+
+
+@fixture(autouse=True)
+def create_data(given_user):
+    Snippet.objects.create(code='foo = "bar"\n', owner=given_user)
+    Snippet.objects.create(code='foo = "bar"\n', owner=given_user)
 
 
 @mark.django_db(transaction=True)
@@ -37,3 +42,8 @@ class TestSnippetViews:
             for format in ["json", "api"]:
                 response = self.client.get(f"{url}.{format}")
                 assert response.status_code, status.HTTP_200_OK  # type: ignore
+
+    def test_creating_snippet(self, given_user):
+        self.client.force_authenticate(user=given_user)
+        response = self.client.post("/snippets/", data={"code": 'foo = "bar"\n'})
+        assert response.status_code == status.HTTP_201_CREATED  # type: ignore
