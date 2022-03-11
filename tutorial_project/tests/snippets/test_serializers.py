@@ -1,10 +1,9 @@
 from collections import OrderedDict
 
-from django.test import TransactionTestCase
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 
-from pytest import fixture, mark
+from pytest import mark
 
 from snippets.models import Snippet
 from snippets.serializers import SnippetSerializer
