@@ -12,7 +12,7 @@ from snippets.models import Snippet
 class TestSnippetViews(APITestCase):
     @classmethod
     def setup_class(cls):
-        user = User.objects.create(username="test")
+        user, _ = User.objects.get_or_create(username="test")
         Snippet.objects.create(code='foo = "bar"\n', owner=user)
         Snippet.objects.create(code='foo = "bar"\n', owner=user)
 
