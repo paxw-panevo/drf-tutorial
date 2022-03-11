@@ -53,6 +53,10 @@ def test_snippet_serializer_should_have_attributes():
     # Save that data we deserialized as a new Snippet
     # We can't save that data since the serializer does NOT have the owner attribute.
     # See assertions below.
+    # Also, "The untyped ReadOnlyField ... will be used for
+    # serialized representations, but will not be used for updating model instances
+    # when they are deserialized (hint: READ-ONLY-FIELD). We could have also used
+    # `CharField(read_only=True)` here."
     # serializer.save()
     # assert len(Snippet.objects.all()) == 2
 
