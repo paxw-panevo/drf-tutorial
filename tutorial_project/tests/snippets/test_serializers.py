@@ -13,19 +13,19 @@ from snippets.serializers import SnippetSerializer
 @mark.django_db(transaction=True)
 def test_snippet_serializer_should_have_attributes():
     user, _ = User.objects.get_or_create(username="test")
-    snippet = Snippet.objects.create(code='print("hello, world")\n', owner=user)
+    given_snippet = Snippet.objects.create(code='print("hello, world")\n', owner=user)
 
     # I want to not have to use the shell and manually check things when I
     # explore the Serializers API so here's a long test!
-    serializer = SnippetSerializer(snippet)
+    serializer = SnippetSerializer(given_snippet)
     actual_keys = list(serializer.data.keys())
     expected_keys = ["id", "title", "code", "linenos", "language", "style"]
     assert actual_keys == expected_keys
 
     actual_json = JSONRenderer().render(serializer.data)
     expected_json = (
-        b'{"id":3,"title":"","code":"print(\\"hello, world\\")\\n",'
-        b'"linenos":false,"language":"python","style":"friendly"}'
+        b'{"id":%d,"title":"","code":"print(\\"hello, world\\")\\n",'
+        b'"linenos":false,"language":"python","style":"friendly"}' % given_snippet.id
     )
     assert actual_json == expected_json
 
